@@ -43,6 +43,13 @@ public class VeterinarioService {
 
     public Veterinario editar(int id, Veterinario novo) {
         Veterinario original = buscar(id);
+        boolean existe = repository.existsByPredicate(vet ->
+                vet.getNome().equals(novo.getNome()) &&
+                vet.getEspecialidade().equals(novo.getEspecialidade()));
+
+        if (existe) {
+            throw new BadRequestException("Já existe um veterinário com essas características.");
+        }
         novo.setId(original.getId());
         repository.update(novo);
         return novo;

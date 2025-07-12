@@ -39,6 +39,14 @@ public class AnimalService {
 
     public Animal editar(int id, Animal atualizado) {
         Animal original = buscar(id);
+        boolean existe = repository.existsByPredicate(animal ->
+                animal.getNome().equals(atualizado.getNome()) &&
+                animal.getIdade() == atualizado.getIdade() &&
+                animal.getRaca().equals(atualizado.getRaca()));
+
+        if (existe) {
+            throw new BadRequestException("Já existe um animal com essas características.");
+        }
         atualizado.setId(original.getId());
         repository.update(atualizado);
         return atualizado;

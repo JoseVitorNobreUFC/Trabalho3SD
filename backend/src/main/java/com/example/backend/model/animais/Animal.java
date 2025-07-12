@@ -23,6 +23,8 @@ public abstract class Animal implements Identificavel {
         this.raca = raca;
     }
 
+    public Animal() {}
+
     public String getNome() {
         return this.nome;
     }
@@ -43,6 +45,18 @@ public abstract class Animal implements Identificavel {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public void setRaca(String raca) {
+        this.raca = raca;
     }
 
     @Override

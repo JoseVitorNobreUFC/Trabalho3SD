@@ -13,6 +13,8 @@ public class Veterinario implements Identificavel {
     this.especialidade = especialidade;
   }
 
+  public Veterinario() {}
+
   public String getNome() {
     return nome;
   }
@@ -29,6 +31,14 @@ public class Veterinario implements Identificavel {
   @Override
   public void setId(int id) {
     this.id = id;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public void setEspecialidade(String especialidade) {
+    this.especialidade = especialidade;
   }
 
   @Override

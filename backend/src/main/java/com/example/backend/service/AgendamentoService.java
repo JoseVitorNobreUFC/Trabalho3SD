@@ -43,6 +43,14 @@ public class AgendamentoService {
 
     public Agendamento editar(int id, Agendamento atualizado) {
         Agendamento original = buscar(id);
+        boolean existe = repository.existsByPredicate(ag ->
+                ag.getData().equals(atualizado.getData()) &&
+                ag.getAnimal().getId() == atualizado.getAnimal().getId() &&
+                ag.getVeterinario().getId() == atualizado.getVeterinario().getId());
+
+        if (existe) {
+            throw new BadRequestException("Já existe um agendamento para esse animal nesta data.");
+        }
         atualizado.setId(original.getId());
         repository.update(atualizado);
         return atualizado;

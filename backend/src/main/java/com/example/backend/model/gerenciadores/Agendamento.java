@@ -17,6 +17,8 @@ public class Agendamento implements Identificavel{
     this.veterinario = veterinario;
   }
 
+  public Agendamento() {}
+
   public Date getData() {
     return data;
   }
@@ -37,6 +39,18 @@ public class Agendamento implements Identificavel{
   @Override
   public void setId(int id) {
     this.id = id;
+  }
+
+  public void setData(Date data) {
+    this.data = data;
+  }
+
+  public void setAnimal(Animal animal) {
+    this.animal = animal;
+  }
+
+  public void setVeterinario(Veterinario veterinario) {
+    this.veterinario = veterinario;
   }
 
   @Override
