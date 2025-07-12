@@ -1,4 +1,4 @@
-package com.example.backend.repository;
+package com.example.backend.repository.generics;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,11 +19,15 @@ public class JsonRepository<T> {
 
     public List<T> load() {
         try {
-            if (!file.exists()) return List.of();
-            return objectMapper.readValue(file, typeReference);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+                objectMapper.writeValue(file, List.of());
+            }
+            return new java.util.ArrayList<>(objectMapper.readValue(file, typeReference));
         } catch (Exception e) {
             e.printStackTrace();
-            return List.of();
+            return new java.util.ArrayList<>();
         }
     }
 

@@ -10,6 +10,10 @@ public class Medicamentos {
         this.itens = new HashMap<>();
     }
 
+    public Medicamentos(Map<String, Integer> itens) {
+        this.itens = itens;
+    }
+
     public void adicionar(String nome, int quantidade) {
         itens.merge(nome, quantidade, Integer::sum);
     }

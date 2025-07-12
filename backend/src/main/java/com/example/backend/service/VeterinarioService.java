@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.model.gerenciadores.Veterinario;
 import com.example.backend.repository.VeterinarioRepository;
 
@@ -29,7 +30,7 @@ public class VeterinarioService {
             veterinarios.remove(id);
             salvar();
         } else {
-            throw new IllegalArgumentException("Veterinário " + id + " não encontrado.");
+            throw new NotFoundException("Veterinário " + id + " não encontrado.");
         }
     }
 
@@ -41,7 +42,7 @@ public class VeterinarioService {
         if (id >= 0 && id < veterinarios.size()) {
             return veterinarios.get(id);
         } else {
-            throw new IllegalArgumentException("Veterinário " + id + " não encontrado.");
+            throw new NotFoundException("Veterinário " + id + " não encontrado.");
         }
     }
 
@@ -50,7 +51,7 @@ public class VeterinarioService {
             veterinarios.set(id, novo);
             salvar();
         } else {
-            throw new IllegalArgumentException("Veterinário " + id + " não encontrado.");
+            throw new NotFoundException("Veterinário " + id + " não encontrado.");
         }
     }
 }

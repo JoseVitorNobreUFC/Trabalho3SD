@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.model.gerenciadores.Agendamento;
 import com.example.backend.repository.AgendamentoRepository;
 
@@ -29,7 +30,7 @@ public class AgendamentoService {
             agendamentos.remove(id);
             salvar();
         } else {
-            throw new IllegalArgumentException("Agendamento " + id + " não encontrado.");
+            throw new NotFoundException("Agendamento " + id + " não encontrado.");
         }
     }
 
@@ -41,7 +42,7 @@ public class AgendamentoService {
         if (id >= 0 && id < agendamentos.size()) {
             return agendamentos.get(id);
         } else {
-            throw new IllegalArgumentException("Agendamento " + id + " não encontrado.");
+            throw new NotFoundException("Agendamento " + id + " não encontrado.");
         }
     }
 
@@ -50,7 +51,7 @@ public class AgendamentoService {
             agendamentos.set(id, novo);
             salvar();
         } else {
-            throw new IllegalArgumentException("Agendamento " + id + " não encontrado.");
+            throw new NotFoundException("Agendamento " + id + " não encontrado.");
         }
     }
 }

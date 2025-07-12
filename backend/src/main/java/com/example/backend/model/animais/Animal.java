@@ -10,11 +10,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = Papagaio.class, name = "PAPAGAIO")
 })
 public abstract class Animal {
+    protected int id;
     protected String nome;
     protected int idade;
     protected String raca;
 
-    public Animal(String nome, int idade, String raca) {
+    public Animal(int id, String nome, int idade, String raca) {
+        this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.raca = raca;
@@ -32,9 +34,14 @@ public abstract class Animal {
         return this.raca;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     @Override
     public String toString() {
         return "{" +
+            " id='" + getId() + "'" +
             " nome='" + getNome() + "'" +
             ", idade='" + getIdade() + "'" +
             ", raca='" + getRaca() + "'" +

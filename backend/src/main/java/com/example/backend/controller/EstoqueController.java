@@ -36,4 +36,23 @@ public class EstoqueController {
             @RequestParam int quantidade) {
         estoqueService.aplicarMedicamento(animal, nome, quantidade);
     }
+
+    @GetMapping("/buscar")
+    public Map<EnumAnimal, Integer> buscarMedicamentoGlobal(@RequestParam String nome) {
+        return estoqueService.buscarEmTodos(nome);
+    }
+
+    @PutMapping("/{animal}/editar-nome")
+    public void editarNomeMedicamento(
+            @PathVariable EnumAnimal animal,
+            @RequestParam String antigo,
+            @RequestParam String novo) {
+        estoqueService.editarNomeMedicamento(animal, antigo, novo);
+    }
+
+    @GetMapping("/todos")
+    public Map<EnumAnimal, Map<String, Integer>> listarTodos() {
+        return estoqueService.listarTodos();
+    }
+
 }

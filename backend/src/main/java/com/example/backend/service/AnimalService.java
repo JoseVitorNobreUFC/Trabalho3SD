@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.model.animais.Animal;
 import com.example.backend.repository.AnimalRepository;
 
@@ -29,7 +30,7 @@ public class AnimalService {
             animais.remove(id);
             salvar();
         } else {
-            throw new IllegalArgumentException("Animal " + id + " não encontrado.");
+            throw new NotFoundException("Animal " + id + " não encontrado.");
         }
     }
 
@@ -41,7 +42,7 @@ public class AnimalService {
         if (id >= 0 && id < animais.size()) {
             return animais.get(id);
         } else {
-            throw new IllegalArgumentException("Animal " + id + " não encontrado.");
+            throw new NotFoundException("Animal " + id + " não encontrado.");
         }
     }
 
@@ -50,7 +51,7 @@ public class AnimalService {
             animais.set(id, novo);
             salvar();
         } else {
-            throw new IllegalArgumentException("Animal " + id + " não encontrado.");
+            throw new NotFoundException("Animal " + id + " não encontrado.");
         }
     }
 }
