@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exceptions.BadRequestException;
 import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.model.gerenciadores.Agendamento;
 import com.example.backend.repository.AgendamentoRepository;
@@ -9,49 +10,41 @@ import java.util.List;
 public class AgendamentoService {
 
     private final AgendamentoRepository repository;
-    private final List<Agendamento> agendamentos;
 
     public AgendamentoService() {
         this.repository = new AgendamentoRepository();
-        this.agendamentos = repository.load();
     }
 
     public List<Agendamento> listar() {
-        return agendamentos;
-    }
-
-    public void agendar(Agendamento agendamento) {
-        agendamentos.add(agendamento);
-        salvar();
-    }
-
-    public void cancelar(int id) {
-        if (id >= 0 && id < agendamentos.size()) {
-            agendamentos.remove(id);
-            salvar();
-        } else {
-            throw new NotFoundException("Agendamento " + id + " não encontrado.");
-        }
-    }
-
-    private void salvar() {
-        repository.save(agendamentos);
+        return repository.findAll();
     }
 
     public Agendamento buscar(int id) {
-        if (id >= 0 && id < agendamentos.size()) {
-            return agendamentos.get(id);
-        } else {
-            throw new NotFoundException("Agendamento " + id + " não encontrado.");
-        }
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Agendamento " + id + " não encontrado."));
     }
 
-    public void editar(int id, Agendamento novo) {
-        if (id >= 0 && id < agendamentos.size()) {
-            agendamentos.set(id, novo);
-            salvar();
-        } else {
-            throw new NotFoundException("Agendamento " + id + " não encontrado.");
+    public Agendamento agendar(Agendamento novo) {
+        boolean existe = repository.existsByPredicate(ag ->
+                ag.getData().equals(novo.getData()) &&
+                ag.getAnimal().getId() == novo.getAnimal().getId());
+
+        if (existe) {
+            throw new BadRequestException("Já existe um agendamento para esse animal nesta data.");
         }
+
+        return repository.saveOne(novo);
+    }
+
+    public void cancelar(int id) {
+        buscar(id);
+        repository.deleteById(id);
+    }
+
+    public Agendamento editar(int id, Agendamento atualizado) {
+        Agendamento original = buscar(id);
+        atualizado.setId(original.getId());
+        repository.update(atualizado);
+        return atualizado;
     }
 }

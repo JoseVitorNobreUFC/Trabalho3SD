@@ -1,5 +1,6 @@
 package com.example.backend.model.animais;
 
+import com.example.backend.model.interfaces.Identificavel;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = Cachorro.class, name = "CACHORRO"),
     @JsonSubTypes.Type(value = Papagaio.class, name = "PAPAGAIO")
 })
-public abstract class Animal {
+public abstract class Animal implements Identificavel {
     protected int id;
     protected String nome;
     protected int idade;
@@ -34,8 +35,14 @@ public abstract class Animal {
         return this.raca;
     }
 
+    @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

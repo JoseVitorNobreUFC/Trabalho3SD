@@ -1,6 +1,8 @@
 package com.example.backend.model.gerenciadores;
 
-public class Veterinario {
+import com.example.backend.model.interfaces.Identificavel;
+
+public class Veterinario implements Identificavel {
   private int id;
   private String nome;
   private String especialidade;
@@ -19,8 +21,14 @@ public class Veterinario {
     return especialidade;
   }
 
+  @Override
   public int getId() {
     return id;
+  }
+
+  @Override
+  public void setId(int id) {
+    this.id = id;
   }
 
   @Override

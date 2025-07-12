@@ -3,8 +3,9 @@ package com.example.backend.model.gerenciadores;
 import java.sql.Date;
 
 import com.example.backend.model.animais.Animal;
+import com.example.backend.model.interfaces.Identificavel;
 
-public class Agendamento {
+public class Agendamento implements Identificavel{
   private int id;
   private Date data;
   private Animal animal;
@@ -28,8 +29,14 @@ public class Agendamento {
     return veterinario;
   }
 
+  @Override
   public int getId() {
     return id;
+  }
+
+  @Override
+  public void setId(int id) {
+    this.id = id;
   }
 
   @Override

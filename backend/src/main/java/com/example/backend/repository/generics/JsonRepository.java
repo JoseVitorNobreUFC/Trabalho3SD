@@ -1,37 +1,75 @@
 package com.example.backend.repository.generics;
 
+import com.example.backend.model.interfaces.Identificavel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import java.io.File;
 import java.util.List;
 
-public class JsonRepository<T> {
+public class JsonRepository<T extends Identificavel> {
+    // Identificavel é uma interface que garante que T tem getId() e setId()
+
     private final File file;
     private final ObjectMapper objectMapper;
     private final TypeReference<List<T>> typeReference;
+    private List<T> cache;
 
     public JsonRepository(String path, TypeReference<List<T>> typeReference) {
         this.file = new File(path);
         this.objectMapper = new ObjectMapper();
         this.typeReference = typeReference;
+        this.cache = load(); // mantemos cache para facilitar geração de ID
     }
 
-    public List<T> load() {
+    private int generateNextId() {
+        return cache.stream().mapToInt(T::getId).max().orElse(0) + 1;
+    }
+
+    public T saveOne(T novo) {
+        novo.setId(generateNextId());
+        cache.add(novo);
+        save(cache);
+        return novo;
+    }
+
+    public List<T> findAll() {
+        return new ArrayList<>(cache);
+    }
+
+    public Optional<T> findById(int id) {
+        return cache.stream().filter(e -> e.getId() == id).findFirst();
+    }
+
+    public void deleteById(int id) {
+        cache.removeIf(e -> e.getId() == id);
+        save(cache);
+    }
+
+    public void update(T atualizado) {
+        deleteById(atualizado.getId());
+        cache.add(atualizado);
+        save(cache);
+    }
+
+    public boolean existsByPredicate(Predicate<T> predicate) {
+        return cache.stream().anyMatch(predicate);
+    }
+
+    private List<T> load() {
         try {
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-                objectMapper.writeValue(file, List.of());
-            }
-            return new java.util.ArrayList<>(objectMapper.readValue(file, typeReference));
+            if (!file.exists()) return new ArrayList<>();
+            return objectMapper.readValue(file, typeReference);
         } catch (Exception e) {
             e.printStackTrace();
-            return new java.util.ArrayList<>();
+            return new ArrayList<>();
         }
     }
 
-    public void save(List<T> data) {
+    private void save(List<T> data) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (Exception e) {
@@ -39,3 +77,4 @@ public class JsonRepository<T> {
         }
     }
 }
+

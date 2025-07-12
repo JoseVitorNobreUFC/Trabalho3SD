@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exceptions.BadRequestException;
 import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.model.gerenciadores.Veterinario;
 import com.example.backend.repository.VeterinarioRepository;
@@ -9,49 +10,41 @@ import java.util.List;
 public class VeterinarioService {
 
     private final VeterinarioRepository repository;
-    private final List<Veterinario> veterinarios;
 
     public VeterinarioService() {
         this.repository = new VeterinarioRepository();
-        this.veterinarios = repository.load();
     }
 
     public List<Veterinario> listar() {
-        return veterinarios;
+        return repository.findAll();
     }
 
-    public void adicionar(Veterinario veterinario) {
-        veterinarios.add(veterinario);
-        salvar();
+    public Veterinario adicionar(Veterinario veterinario) {
+        boolean existe = repository.existsByPredicate(vet ->
+                vet.getNome().equals(veterinario.getNome()) &&
+                vet.getEspecialidade().equals(veterinario.getEspecialidade()));
+
+        if (existe) {
+            throw new BadRequestException("Já existe um veterinário com essas características.");
+        }
+
+        return repository.saveOne(veterinario);
     }
 
     public void remover(int id) {
-        if (id >= 0 && id < veterinarios.size()) {
-            veterinarios.remove(id);
-            salvar();
-        } else {
-            throw new NotFoundException("Veterinário " + id + " não encontrado.");
-        }
-    }
-
-    private void salvar() {
-        repository.save(veterinarios);
+        buscar(id);
+        repository.deleteById(id);
     }
 
     public Veterinario buscar(int id) {
-        if (id >= 0 && id < veterinarios.size()) {
-            return veterinarios.get(id);
-        } else {
-            throw new NotFoundException("Veterinário " + id + " não encontrado.");
-        }
+        return repository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Veterinário " + id + " não encontrado."));
     }
 
-    public void editar(int id, Veterinario novo) {
-        if (id >= 0 && id < veterinarios.size()) {
-            veterinarios.set(id, novo);
-            salvar();
-        } else {
-            throw new NotFoundException("Veterinário " + id + " não encontrado.");
-        }
+    public Veterinario editar(int id, Veterinario novo) {
+        Veterinario original = buscar(id);
+        novo.setId(original.getId());
+        repository.update(novo);
+        return novo;
     }
 }
