@@ -1,0 +1,20 @@
+{
+  "todos" : {
+    "GATO" : {
+      "itens" : {
+        "benzetacil" : 3,
+        "dipirona" : 4
+      }
+    },
+    "PAPAGAIO" : {
+      "itens" : {
+        "paracetamol" : 1
+      }
+    },
+    "CACHORRO" : {
+      "itens" : {
+        "cetralina" : 4
+      }
+    }
+  }
+}

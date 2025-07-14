@@ -1,11 +1,57 @@
  <!DOCTYPE html>
- <html lang="en">
+ <html lang="pt-BR">
  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="./scripts/scripts.js" defer></script>
  </head>
  <body>
-    <h1>Hello World</h1>
+   <h1 id="title">Clinica veterinaria</h1>
+   <div id="containerAdd" class="container">
+      <div class="containerButtons">
+         <h3>Adicionar informações</h3>
+         <button id="addMedicamento" value="Medicamento">Adicionar medicamento</button>
+         <button id="addAnimal" value="Animal">Adicionar animal</button>
+         <button id="addVeterinario" value="Veterinario">Adicionar veterinario</button>
+      </div>
+      <form id="formAdd" action="">
+
+      </form>
+        
+    </div>
+    
+   <div id="containerList" class="container">
+      <div class="containerButtons">
+         <h3>Requisitar informações</h3>
+         <button id="listAnimals">Listar animais</button>
+         <button id="listVeterinarios">Listar veterinarios</button>
+         <button id="listConsulta">Listar consultas</button>
+         <button id="listMedicamentos">Ver medicamento por animal</button>
+
+      </div>
+   </div>
+
+   <div id="containerRemove" class="container">
+      <div class="containerButtons">
+         <h3>remover informações</h3>
+         <button id="removeAnimal">Remover animal</button>
+         <button id="removeVeterinario">Remover veterinario</button>
+         <button id="cancelConsulta">Cancelar consulta</button>
+
+      </div>
+
+   </div>
+
+   <div id="containerAction" class="container">
+      <div class="containerButtons">
+         <h3>Realizar ação</h3>
+         <button id="aplMedicamento">Aplicar medicamento</button>
+         <button id="realizarConsulta">Realizar consulta</button>
+
+      </div>
+   </div>
  </body>
+
  </html>
