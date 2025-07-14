@@ -1,6 +1,8 @@
 package com.example.backend.repository.generics;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,8 +11,11 @@ public class JsonObjectRepository<T> {
     private final ObjectMapper objectMapper;
     private final Class<T> clazz;
 
+    private Path rootDir = Paths.get("").toAbsolutePath();
+
     public JsonObjectRepository(String path, Class<T> clazz) {
-        this.file = new File(path);
+        Path dataPath = rootDir.resolve("data").resolve(path);
+        this.file = new File(dataPath.toString());
         this.objectMapper = new ObjectMapper();
         this.clazz = clazz;
     }

@@ -5,6 +5,6 @@ import com.example.backend.repository.generics.JsonObjectRepository;
 
 public class EstoqueRepository extends JsonObjectRepository<Estoque> {
     public EstoqueRepository() {
-        super("data/estoque.json", Estoque.class);
+        super("estoque.json", Estoque.class);
     }
 }

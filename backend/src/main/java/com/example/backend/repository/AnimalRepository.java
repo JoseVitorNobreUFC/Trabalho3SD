@@ -8,6 +8,6 @@ import java.util.List;
 
 public class AnimalRepository extends JsonRepository<Animal> {
     public AnimalRepository() {
-        super("data/animais.json", new TypeReference<List<Animal>>() {});
+        super("animais.json", new TypeReference<List<Animal>>() {});
     }
 }

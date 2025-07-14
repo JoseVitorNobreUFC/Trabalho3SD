@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class JsonRepository<T extends Identificavel> {
@@ -18,8 +20,11 @@ public class JsonRepository<T extends Identificavel> {
     private final TypeReference<List<T>> typeReference;
     private List<T> cache;
 
+    private Path rootDir = Paths.get("").toAbsolutePath();
+
     public JsonRepository(String path, TypeReference<List<T>> typeReference) {
-        this.file = new File(path);
+        Path dataPath = rootDir.resolve("data").resolve(path);
+        this.file = new File(dataPath.toString());
         this.objectMapper = new ObjectMapper();
         this.typeReference = typeReference;
         this.cache = load(); // mantemos cache para facilitar geração de ID

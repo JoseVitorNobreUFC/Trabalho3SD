@@ -8,11 +8,16 @@ import com.example.backend.repository.VeterinarioRepository;
 import java.util.List;
 
 public class VeterinarioService {
-
+    private static final VeterinarioService instance = new VeterinarioService();
     private final VeterinarioRepository repository;
+    private final AgendamentoService agendamentoService = AgendamentoService.getInstance();
 
     public VeterinarioService() {
         this.repository = new VeterinarioRepository();
+    }
+
+    public static VeterinarioService getInstance() {
+        return instance;
     }
 
     public List<Veterinario> listar() {
@@ -32,6 +37,9 @@ public class VeterinarioService {
     }
 
     public void remover(int id) {
+        if (agendamentoService.contemVeterinario(id)) {
+            throw new BadRequestException("Veterinário possui agendamento");
+        }
         buscar(id);
         repository.deleteById(id);
     }

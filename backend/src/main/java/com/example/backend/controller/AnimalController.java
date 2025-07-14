@@ -27,20 +27,12 @@ public class AnimalController {
         this.animalService = new AnimalService();
     }
 
-    @GetMapping("path")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
-    }
-
+    @GetMapping()
     public List<Animal> listarAnimais() {
         return animalService.listar();
     }
 
-    @PostMapping("path")
-    public String postMethodName(@RequestBody String entity) {
-        return entity;
-    }
-
+    @PostMapping
     public void adicionarAnimal(@RequestBody Animal animal) {
         animalService.adicionar(animal);
     }

@@ -1,0 +1,19 @@
+{
+  "GATO": [ {
+  "id" : 1,
+  "nome" : "string",
+  "idade" : 0,
+  "raca" : "string"
+}, {
+  "id" : 2,
+  "nome" : "ASA",
+  "idade" : 0,
+  "raca" : "string"
+} ],
+  "CACHORRO": [ {
+  "id" : 1,
+  "nome" : "string",
+  "idade" : 0,
+  "raca" : "string"
+  }]
+}

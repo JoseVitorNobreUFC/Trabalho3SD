@@ -8,11 +8,16 @@ import com.example.backend.repository.AnimalRepository;
 import java.util.List;
 
 public class AnimalService {
-
+    private static final AnimalService instance = new AnimalService();
     private final AnimalRepository repository;
+    private final AgendamentoService agendamentoService = AgendamentoService.getInstance();
 
     public AnimalService() {
         this.repository = new AnimalRepository();
+    }
+
+    public static AnimalService getInstance() {
+        return instance;
     }
 
     public List<Animal> listar() {
@@ -53,6 +58,9 @@ public class AnimalService {
     }
 
     public void remover(int id) {
+        if(agendamentoService.contemAnimal(id)) {
+            throw new BadRequestException("Animal possui agendamento");
+        }
         buscar(id);
         repository.deleteById(id);
     }

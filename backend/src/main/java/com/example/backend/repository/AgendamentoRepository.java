@@ -8,6 +8,6 @@ import java.util.List;
 
 public class AgendamentoRepository extends JsonRepository<Agendamento> {
     public AgendamentoRepository() {
-        super("data/agendamentos.json", new TypeReference<List<Agendamento>>() {});
+        super("agendamentos.json", new TypeReference<List<Agendamento>>() {});
     }
 }

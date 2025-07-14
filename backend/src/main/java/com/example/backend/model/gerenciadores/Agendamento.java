@@ -2,19 +2,19 @@ package com.example.backend.model.gerenciadores;
 
 import java.sql.Date;
 
-import com.example.backend.model.animais.Animal;
 import com.example.backend.model.interfaces.Identificavel;
 
 public class Agendamento implements Identificavel{
   private int id;
   private Date data;
-  private Animal animal;
-  private Veterinario veterinario;
+  private int idAnimal;
+  private int idVeterinario;
 
-  public Agendamento(int id, Date data, Animal animal, Veterinario veterinario) {
+  public Agendamento(int id, Date data, int idAnimal, int idVeterinario) {
     this.data = data;
-    this.animal = animal;
-    this.veterinario = veterinario;
+    this.idAnimal = idAnimal;
+    this.idVeterinario = idVeterinario;
+    this.id = id;
   }
 
   public Agendamento() {}
@@ -23,12 +23,12 @@ public class Agendamento implements Identificavel{
     return data;
   }
 
-  public Animal getAnimal() {
-    return animal;
+  public int getAnimal() {
+    return idAnimal;
   }
 
-  public Veterinario getVeterinario() {
-    return veterinario;
+  public int getVeterinario() {
+    return idVeterinario;
   }
 
   @Override
@@ -45,12 +45,12 @@ public class Agendamento implements Identificavel{
     this.data = data;
   }
 
-  public void setAnimal(Animal animal) {
-    this.animal = animal;
+  public void setAnimal(int idAnimal) {
+    this.idAnimal = idAnimal;
   }
 
-  public void setVeterinario(Veterinario veterinario) {
-    this.veterinario = veterinario;
+  public void setVeterinario(int idVeterinario) {
+    this.idVeterinario = idVeterinario;
   }
 
   @Override
@@ -58,8 +58,8 @@ public class Agendamento implements Identificavel{
     return "Agendamento{" +
         "id=" + id +
         ", data=" + data +
-        ", animal=" + animal +
-        ", veterinario=" + veterinario +
+        ", idAnimal=" + idAnimal +
+        ", idVeterinario=" + idVeterinario +
         '}';
   }
 }

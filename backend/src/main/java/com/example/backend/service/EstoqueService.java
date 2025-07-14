@@ -9,13 +9,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EstoqueService {
-
+    private static final EstoqueService instance = new EstoqueService();
     private final EstoqueRepository repository;
     private final Estoque estoque;
 
     public EstoqueService() {
         this.repository = new EstoqueRepository();
         this.estoque = repository.load();
+    }
+
+    public static EstoqueService getInstance() {
+        return instance;
     }
 
     public Map<String, Integer> listarMedicamentos(EnumAnimal animal) {

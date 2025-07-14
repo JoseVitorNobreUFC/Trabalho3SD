@@ -8,6 +8,6 @@ import java.util.List;
 
 public class VeterinarioRepository extends JsonRepository<Veterinario> {
     public VeterinarioRepository() {
-        super("data/veterinarios.json", new TypeReference<List<Veterinario>>() {});
+        super("veterinarios.json", new TypeReference<List<Veterinario>>() {});
     }
 }
