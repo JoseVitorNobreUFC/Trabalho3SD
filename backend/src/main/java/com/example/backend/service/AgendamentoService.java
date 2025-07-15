@@ -26,24 +26,23 @@ public class AgendamentoService {
     }
 
     public boolean contemAnimal(int id) {
-        return repository.existsByPredicate(ag -> ag.getAnimal() == id);
+        return repository.load().stream().anyMatch(ag -> ag.getAnimal() == id);
     }
 
     public boolean contemVeterinario(int id) {
-        return repository.existsByPredicate(ag -> ag.getVeterinario() == id);
+        return repository.load().stream().anyMatch(ag -> ag.getVeterinario() == id);
     }
 
     public Agendamento buscar(int id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Agendamento " + id + " não encontrado."));
+                .orElseThrow(() -> new NotFoundException("Agendamento de id " + id + " não encontrado."));
     }
 
     public Agendamento agendar(Agendamento agendamento) {
         animalService.buscar(agendamento.getAnimal());
         veterinarioService.buscar(agendamento.getVeterinario());
-        
-        if (repository.existsByPredicate(ag ->
-                ag.getData().equals(agendamento.getData()) &&
+
+        if (repository.existsByPredicate(ag -> ag.getData().equals(agendamento.getData()) &&
                 ag.getAnimal() == agendamento.getAnimal() &&
                 ag.getVeterinario() == agendamento.getVeterinario())) {
             throw new BadRequestException("Já existe um agendamento para esse animal nesta data.");
@@ -59,13 +58,12 @@ public class AgendamentoService {
     public Agendamento editar(int id, Agendamento atualizado) {
         Agendamento original = buscar(id);
         if (!(animalService.buscar(atualizado.getAnimal()) != null)) {
-            throw new NotFoundException("Animal " + atualizado.getAnimal() + " nao encontrado.");
+            throw new NotFoundException("Animal com id " + atualizado.getAnimal() + " nao encontrado.");
         }
         if (!(veterinarioService.buscar(atualizado.getVeterinario()) != null)) {
-            throw new NotFoundException("Veterinario " + atualizado.getVeterinario() + " nao encontrado.");
+            throw new NotFoundException("Veterinario com id " + atualizado.getVeterinario() + " nao encontrado.");
         }
-        boolean existe = repository.existsByPredicate(ag ->
-                ag.getData().equals(atualizado.getData()) &&
+        boolean existe = repository.existsByPredicate(ag -> ag.getData().equals(atualizado.getData()) &&
                 ag.getAnimal() == atualizado.getAnimal() &&
                 ag.getVeterinario() == atualizado.getVeterinario());
 

@@ -1,16 +1,16 @@
 package com.example.backend.model.gerenciadores;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.example.backend.model.interfaces.Identificavel;
 
 public class Agendamento implements Identificavel{
   private int id;
-  private Date data;
+  private LocalDate data;
   private int idAnimal;
   private int idVeterinario;
 
-  public Agendamento(int id, Date data, int idAnimal, int idVeterinario) {
+  public Agendamento(int id, LocalDate data, int idAnimal, int idVeterinario) {
     this.data = data;
     this.idAnimal = idAnimal;
     this.idVeterinario = idVeterinario;
@@ -19,7 +19,7 @@ public class Agendamento implements Identificavel{
 
   public Agendamento() {}
 
-  public Date getData() {
+  public LocalDate getData() {
     return data;
   }
 
@@ -41,7 +41,7 @@ public class Agendamento implements Identificavel{
     this.id = id;
   }
 
-  public void setData(Date data) {
+  public void setData(LocalDate data) {
     this.data = data;
   }
 

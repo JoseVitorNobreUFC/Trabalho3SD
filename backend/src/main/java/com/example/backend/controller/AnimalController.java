@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.animais.Animal;
 import com.example.backend.model.enums.EnumAnimal;
 import com.example.backend.service.AnimalService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/animais")
@@ -50,5 +52,17 @@ public class AnimalController {
     public void editarAnimal(@PathVariable int id, @RequestBody EnumAnimal tipo, @RequestBody Animal novo) {
         animalService.editarAnimal(tipo, id, novo);
     }
+    
+    @GetMapping("/search/{nome}")
+    public Map<EnumAnimal, List<Animal>> buscarPorNome(@PathVariable String nome) {
+        return animalService.buscarEmTodos(nome);
+    }
+
+    @GetMapping("/tipo/{animal}")
+    public List<Animal> getMethodName(@PathVariable EnumAnimal animal) {
+        return animalService.listarPorTipo(animal);
+    }
+    
+    
 
 }

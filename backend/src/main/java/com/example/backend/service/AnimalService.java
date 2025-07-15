@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class AnimalService {
     private static final AnimalService instance = new AnimalService();
     private final AnimalRepository repository;
@@ -33,9 +32,17 @@ public class AnimalService {
     }
 
     public void adicionar(EnumAnimal tipo, Animal animal) {
-        if (areaDeRepouso.exists(animal)) {
+        if (areaDeRepouso.exists(tipo, animal)) {
             throw new BadRequestException("Animal já cadastrado");
         }
+
+        int proximoId = areaDeRepouso.getAnimais().values().stream()
+                .flatMap(List::stream)
+                .mapToInt(Animal::getId)
+                .max()
+                .orElse(0) + 1;
+
+        animal.setId(proximoId);
         areaDeRepouso.addAnimal(tipo, animal);
         salvar();
     }
@@ -49,7 +56,7 @@ public class AnimalService {
     }
 
     public void editarAnimal(EnumAnimal tipo, int idAnimal, Animal animal) {
-        if (areaDeRepouso.exists(animal)) {
+        if (areaDeRepouso.exists(tipo, animal)) {
             throw new BadRequestException("Animal já existe");
         }
         areaDeRepouso.editarAnimal(tipo, idAnimal, animal);
@@ -71,7 +78,7 @@ public class AnimalService {
         }
         throw new NotFoundException("Animal " + id + " nao encontrado.");
     }
-    
+
     private void salvar() {
         repository.save(areaDeRepouso);
     }

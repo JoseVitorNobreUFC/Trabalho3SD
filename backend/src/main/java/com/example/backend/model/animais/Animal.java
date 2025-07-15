@@ -2,7 +2,7 @@ package com.example.backend.model.animais;
 
 import com.example.backend.model.interfaces.Identificavel;
 
-public abstract class Animal implements Identificavel {
+public class Animal implements Identificavel {
     protected int id;
     protected String nome;
     protected int idade;

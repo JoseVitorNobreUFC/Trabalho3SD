@@ -3,6 +3,9 @@ package com.example.backend.repository.generics;
 import com.example.backend.model.interfaces.Identificavel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -26,8 +29,10 @@ public class JsonRepository<T extends Identificavel> {
         Path dataPath = rootDir.resolve("data").resolve(path);
         this.file = new File(dataPath.toString());
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         this.typeReference = typeReference;
-        this.cache = load(); // mantemos cache para facilitar geração de ID
+        this.cache = load();
     }
 
     private int generateNextId() {
@@ -64,7 +69,7 @@ public class JsonRepository<T extends Identificavel> {
         return cache.stream().anyMatch(predicate);
     }
 
-    private List<T> load() {
+    public List<T> load() {
         try {
             if (!file.exists()) return new ArrayList<>();
             return objectMapper.readValue(file, typeReference);

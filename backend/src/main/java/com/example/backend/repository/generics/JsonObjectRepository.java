@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class JsonObjectRepository<T> {
     private final File file;
@@ -17,6 +19,8 @@ public class JsonObjectRepository<T> {
         Path dataPath = rootDir.resolve("data").resolve(path);
         this.file = new File(dataPath.toString());
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         this.clazz = clazz;
     }
 

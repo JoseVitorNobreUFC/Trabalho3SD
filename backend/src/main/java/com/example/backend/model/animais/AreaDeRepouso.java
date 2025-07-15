@@ -1,5 +1,6 @@
 package com.example.backend.model.animais;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,9 @@ public class AreaDeRepouso {
   }
 
   public void addAnimal(EnumAnimal tipo, Animal animal) {
-    animais.get(tipo).add(animal);
+    animais
+      .computeIfAbsent(tipo, k -> new ArrayList<Animal>())
+      .add(animal);
   }
 
   public void removeAnimal(int idAnimal) {
@@ -65,16 +68,15 @@ public class AreaDeRepouso {
     return null;
   }
 
-  public boolean exists(Animal animal) {
-    for (EnumAnimal tipo : EnumAnimal.values()) {
-      List<Animal> animaisDoAnimal = animais.get(tipo);
-      if (animaisDoAnimal != null) {
-        for (Animal animalDoAnimal : animaisDoAnimal) {
-          if (animalDoAnimal.equals(animal)) {
-            return true;
-          }
-        }
-      }
+  public boolean exists(EnumAnimal tipo, Animal animal) {
+    List<Animal> animaisDoAnimal = animais.get(tipo);
+    if (animaisDoAnimal != null) {
+      return animaisDoAnimal
+        .stream()
+        .anyMatch(a -> 
+          a.getNome().equals(animal.getNome())
+          && a.getIdade() == animal.getIdade()
+          && a.getRaca().equals(animal.getRaca()));
     }
     return false;
   }
