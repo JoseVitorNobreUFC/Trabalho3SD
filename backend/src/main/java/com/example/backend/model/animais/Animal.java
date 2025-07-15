@@ -1,15 +1,7 @@
 package com.example.backend.model.animais;
 
 import com.example.backend.model.interfaces.Identificavel;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "tipo")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Gato.class, name = "GATO"),
-    @JsonSubTypes.Type(value = Cachorro.class, name = "CACHORRO"),
-    @JsonSubTypes.Type(value = Papagaio.class, name = "PAPAGAIO")
-})
 public abstract class Animal implements Identificavel {
     protected int id;
     protected String nome;

@@ -3,65 +3,76 @@ package com.example.backend.service;
 import com.example.backend.exceptions.BadRequestException;
 import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.model.animais.Animal;
+import com.example.backend.model.animais.AreaDeRepouso;
+import com.example.backend.model.enums.EnumAnimal;
 import com.example.backend.repository.AnimalRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 public class AnimalService {
     private static final AnimalService instance = new AnimalService();
     private final AnimalRepository repository;
     private final AgendamentoService agendamentoService = AgendamentoService.getInstance();
+    private AreaDeRepouso areaDeRepouso;
 
     public AnimalService() {
         this.repository = new AnimalRepository();
+        this.areaDeRepouso = repository.load();
     }
 
     public static AnimalService getInstance() {
         return instance;
     }
 
-    public List<Animal> listar() {
-        return repository.findAll();
+    public Map<EnumAnimal, List<Animal>> listar() {
+        AreaDeRepouso animais = new AreaDeRepouso(areaDeRepouso.getAnimais());
+        return animais != null ? animais.getAnimais() : new HashMap<>();
+    }
+
+    public void adicionar(EnumAnimal tipo, Animal animal) {
+        if (areaDeRepouso.exists(animal)) {
+            throw new BadRequestException("Animal já cadastrado");
+        }
+        areaDeRepouso.addAnimal(tipo, animal);
+        salvar();
+    }
+
+    public void removeAnimal(int idAnimal) {
+        if (agendamentoService.contemAnimal(idAnimal)) {
+            throw new BadRequestException("Animal possui agendamento");
+        }
+        areaDeRepouso.removeAnimal(idAnimal);
+        salvar();
+    }
+
+    public void editarAnimal(EnumAnimal tipo, int idAnimal, Animal animal) {
+        if (areaDeRepouso.exists(animal)) {
+            throw new BadRequestException("Animal já existe");
+        }
+        areaDeRepouso.editarAnimal(tipo, idAnimal, animal);
+        salvar();
+    }
+
+    public List<Animal> listarPorTipo(EnumAnimal tipo) {
+        return areaDeRepouso.getAnimais(tipo);
+    }
+
+    public Map<EnumAnimal, List<Animal>> buscarEmTodos(String nome) {
+        AreaDeRepouso animais = new AreaDeRepouso(areaDeRepouso.buscarEmTodos(nome));
+        return animais != null ? animais.getAnimais() : new HashMap<>();
     }
 
     public Animal buscar(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Animal " + id + " não encontrado."));
-    }
-
-    public Animal adicionar(Animal novo) {
-        boolean existe = repository.existsByPredicate(animal ->
-                animal.getNome().equals(novo.getNome()) &&
-                animal.getIdade() == novo.getIdade() &&
-                animal.getRaca().equals(novo.getRaca()));
-
-        if (existe) {
-            throw new BadRequestException("Já existe um animal com essas características.");
+        if (areaDeRepouso.getById(id) != null) {
+            return areaDeRepouso.getById(id);
         }
-
-        return repository.saveOne(novo);
+        throw new NotFoundException("Animal " + id + " nao encontrado.");
     }
-
-    public Animal editar(int id, Animal atualizado) {
-        Animal original = buscar(id);
-        boolean existe = repository.existsByPredicate(animal ->
-                animal.getNome().equals(atualizado.getNome()) &&
-                animal.getIdade() == atualizado.getIdade() &&
-                animal.getRaca().equals(atualizado.getRaca()));
-
-        if (existe) {
-            throw new BadRequestException("Já existe um animal com essas características.");
-        }
-        atualizado.setId(original.getId());
-        repository.update(atualizado);
-        return atualizado;
-    }
-
-    public void remover(int id) {
-        if(agendamentoService.contemAnimal(id)) {
-            throw new BadRequestException("Animal possui agendamento");
-        }
-        buscar(id);
-        repository.deleteById(id);
+    
+    private void salvar() {
+        repository.save(areaDeRepouso);
     }
 }

@@ -2,7 +2,6 @@ package com.example.backend.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +16,6 @@ import com.example.backend.service.VeterinarioService;
 
 @RestController
 @RequestMapping("/veterinarios")
-@CrossOrigin(origins = "http://127.0.0.1:5500") 
-
 public class VeterinarioController {
 
     private final VeterinarioService veterinarioService;
