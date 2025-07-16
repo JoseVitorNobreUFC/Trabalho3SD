@@ -27,11 +27,14 @@ public class AnimalService {
     }
 
     public Map<EnumAnimal, List<Animal>> listar() {
+        this.areaDeRepouso = repository.load();
         AreaDeRepouso animais = new AreaDeRepouso(areaDeRepouso.getAnimais());
         return animais != null ? animais.getAnimais() : new HashMap<>();
     }
 
     public void adicionar(EnumAnimal tipo, Animal animal) {
+        this.areaDeRepouso = repository.load();
+
         if (areaDeRepouso.exists(tipo, animal)) {
             throw new BadRequestException("Animal já cadastrado");
         }
@@ -48,6 +51,8 @@ public class AnimalService {
     }
 
     public void removeAnimal(int idAnimal) {
+        this.areaDeRepouso = repository.load(); 
+
         if (agendamentoService.contemAnimal(idAnimal)) {
             throw new BadRequestException("Animal possui agendamento");
         }
@@ -56,6 +61,8 @@ public class AnimalService {
     }
 
     public void editarAnimal(EnumAnimal tipo, int idAnimal, Animal animal) {
+        this.areaDeRepouso = repository.load(); 
+
         if (areaDeRepouso.exists(tipo, animal)) {
             throw new BadRequestException("Animal já existe");
         }
@@ -64,17 +71,21 @@ public class AnimalService {
     }
 
     public List<Animal> listarPorTipo(EnumAnimal tipo) {
+        this.areaDeRepouso = repository.load();
         return areaDeRepouso.getAnimais(tipo);
     }
 
     public Map<EnumAnimal, List<Animal>> buscarEmTodos(String nome) {
+        this.areaDeRepouso = repository.load(); 
         AreaDeRepouso animais = new AreaDeRepouso(areaDeRepouso.buscarEmTodos(nome));
         return animais != null ? animais.getAnimais() : new HashMap<>();
     }
 
     public Animal buscar(int id) {
-        if (areaDeRepouso.getById(id) != null) {
-            return areaDeRepouso.getById(id);
+        this.areaDeRepouso = repository.load(); 
+        Animal encontrado = areaDeRepouso.getById(id);
+        if (encontrado != null) {
+            return encontrado;
         }
         throw new NotFoundException("Animal " + id + " nao encontrado.");
     }

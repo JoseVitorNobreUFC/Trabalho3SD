@@ -22,15 +22,17 @@ public class AgendamentoService {
     }
 
     public List<Agendamento> listar() {
-        return repository.findAll();
+        return repository.load();
     }
 
     public boolean contemAnimal(int id) {
-        return repository.load().stream().anyMatch(ag -> ag.getAnimal() == id);
+        List<Agendamento> agendamentos = repository.findAll();
+        return agendamentos.stream().anyMatch(ag -> ag.getAnimal() == id);
     }
 
     public boolean contemVeterinario(int id) {
-        return repository.load().stream().anyMatch(ag -> ag.getVeterinario() == id);
+        List<Agendamento> agendamentos = repository.findAll();
+        return agendamentos.stream().anyMatch(ag -> ag.getVeterinario() == id);
     }
 
     public Agendamento buscar(int id) {
@@ -42,34 +44,40 @@ public class AgendamentoService {
         animalService.buscar(agendamento.getAnimal());
         veterinarioService.buscar(agendamento.getVeterinario());
 
-        if (repository.existsByPredicate(ag -> ag.getData().equals(agendamento.getData()) &&
+        List<Agendamento> agendamentos = repository.findAll();
+        boolean existe = agendamentos.stream().anyMatch(ag ->
+                ag.getData().equals(agendamento.getData()) &&
                 ag.getAnimal() == agendamento.getAnimal() &&
-                ag.getVeterinario() == agendamento.getVeterinario())) {
+                ag.getVeterinario() == agendamento.getVeterinario());
+
+        if (existe) {
             throw new BadRequestException("Já existe um agendamento para esse animal nesta data.");
         }
+
         return repository.saveOne(agendamento);
     }
 
     public void cancelar(int id) {
-        buscar(id);
+        buscar(id); 
         repository.deleteById(id);
     }
 
     public Agendamento editar(int id, Agendamento atualizado) {
         Agendamento original = buscar(id);
-        if (!(animalService.buscar(atualizado.getAnimal()) != null)) {
-            throw new NotFoundException("Animal com id " + atualizado.getAnimal() + " nao encontrado.");
-        }
-        if (!(veterinarioService.buscar(atualizado.getVeterinario()) != null)) {
-            throw new NotFoundException("Veterinario com id " + atualizado.getVeterinario() + " nao encontrado.");
-        }
-        boolean existe = repository.existsByPredicate(ag -> ag.getData().equals(atualizado.getData()) &&
+
+        animalService.buscar(atualizado.getAnimal());
+        veterinarioService.buscar(atualizado.getVeterinario());
+
+        List<Agendamento> agendamentos = repository.findAll();
+        boolean existe = agendamentos.stream().anyMatch(ag ->
+                ag.getData().equals(atualizado.getData()) &&
                 ag.getAnimal() == atualizado.getAnimal() &&
                 ag.getVeterinario() == atualizado.getVeterinario());
 
         if (existe) {
             throw new BadRequestException("Já existe um agendamento para esse animal nesta data.");
         }
+
         atualizado.setId(original.getId());
         repository.update(atualizado);
         return atualizado;

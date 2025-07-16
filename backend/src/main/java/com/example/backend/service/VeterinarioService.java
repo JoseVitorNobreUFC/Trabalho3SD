@@ -21,11 +21,11 @@ public class VeterinarioService {
     }
 
     public List<Veterinario> listar() {
-        return repository.findAll();
+        return repository.load();
     }
 
     public Veterinario adicionar(Veterinario veterinario) {
-        boolean existe = repository.existsByPredicate(vet ->
+        boolean existe = this.listar().stream().anyMatch(vet ->
                 vet.getNome().equals(veterinario.getNome()) &&
                 vet.getEspecialidade().equals(veterinario.getEspecialidade()));
 
@@ -40,6 +40,7 @@ public class VeterinarioService {
         if (agendamentoService.contemVeterinario(id)) {
             throw new BadRequestException("Veterinário possui agendamento");
         }
+
         buscar(id);
         repository.deleteById(id);
     }
@@ -51,13 +52,16 @@ public class VeterinarioService {
 
     public Veterinario editar(int id, Veterinario novo) {
         Veterinario original = buscar(id);
-        boolean existe = repository.existsByPredicate(vet ->
+
+        List<Veterinario> veterinarios = repository.findAll();
+        boolean existe = veterinarios.stream().anyMatch(vet ->
                 vet.getNome().equals(novo.getNome()) &&
                 vet.getEspecialidade().equals(novo.getEspecialidade()));
 
         if (existe) {
             throw new BadRequestException("Já existe um veterinário com essas características.");
         }
+
         novo.setId(original.getId());
         repository.update(novo);
         return novo;

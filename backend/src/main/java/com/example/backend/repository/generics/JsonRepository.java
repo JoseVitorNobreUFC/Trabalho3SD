@@ -16,8 +16,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class JsonRepository<T extends Identificavel> {
-    // Identificavel é uma interface que garante que T tem getId() e setId()
-
     private final File file;
     private final ObjectMapper objectMapper;
     private final TypeReference<List<T>> typeReference;
