@@ -1,0 +1,22 @@
+{
+  "animais" : {
+    "GATO" : [ {
+      "id" : 1,
+      "nome" : "milu",
+      "idade" : 4,
+      "raca" : "golden"
+    } ],
+    "PAPAGAIO" : [ {
+      "id" : 2,
+      "nome" : "blue",
+      "idade" : 4,
+      "raca" : "arara azul"
+    } ],
+    "CACHORRO" : [ {
+      "id" : 3,
+      "nome" : "bilu",
+      "idade" : 4,
+      "raca" : "pincher"
+    } ]
+  }
+}
