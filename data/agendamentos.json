@@ -1,16 +1,6 @@
 [ {
   "id" : 1,
-  "data" : 1752502870561,
-  "animal" : {
-    "tipo" : "CACHORRO",
-    "id" : 1,
-    "nome" : "albert",
-    "idade" : 2,
-    "raca" : "golden"
-  },
-  "veterinario" : {
-    "id" : 0,
-    "nome" : "dolitlle",
-    "especialidade" : "geral"
-  }
+  "data" : "2025-08-15",
+  "veterinario" : 3,
+  "animal" : 3
 } ]
