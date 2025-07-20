@@ -5,6 +5,11 @@
       "nome" : "milu",
       "idade" : 4,
       "raca" : "golden"
+    }, {
+      "id" : 4,
+      "nome" : "lion",
+      "idade" : 5,
+      "raca" : "lionel"
     } ],
     "PAPAGAIO" : [ {
       "id" : 2,

@@ -1,20 +1,25 @@
 {
   "todos" : {
-    "CACHORRO" : {
-      "itens" : {
-        "cetralina" : 4
-      }
-    },
     "PAPAGAIO" : {
       "itens" : {
         "paracetamol" : 1,
-        "aplazolan" : 5
+        "aplazolan" : 5,
+        "dipirona" : 2,
+        "morfina" : 20
+      }
+    },
+    "CACHORRO" : {
+      "itens" : {
+        "cetralina" : 4,
+        "benzetacil" : 8,
+        "gabapetina" : 3
       }
     },
     "GATO" : {
       "itens" : {
         "benzetacil" : 8,
-        "dipirona" : 4
+        "dipirona" : 9,
+        "erva" : 15
       }
     }
   }

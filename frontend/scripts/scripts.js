@@ -26,6 +26,14 @@ const setFormsAdd = {
             }
         },
         addAnimal:{
+            id:{
+                For: "id",
+                Text: "id do animal",
+                Type:"number",
+                Id: "id",
+                Name: "id",
+                Placeholder: "Digite o id do animal",
+            },
             nome:{
                 For: "nome",
                 Text: "Nome do animal",
@@ -60,6 +68,14 @@ const setFormsAdd = {
             },
         },
         addVeterinario:{ 
+            id:{
+                For: "id",
+                Text: "id do veterinário",
+                Type:"number",
+                Id: "id",
+                Name: "id",
+                Placeholder: "Digite o id do veterinário",
+            },
             nome:{
                 For: "nome",
                 Text: "Nome do veterinário",
@@ -78,6 +94,14 @@ const setFormsAdd = {
             },
         },
         addAgendamento:{
+            id:{
+                For: "id",
+                Text: "id do agendamento",
+                Type:"number",
+                Id: "id",
+                Name: "id",
+                Placeholder: "Digite o id do agendamento",
+            },
             data:{
                 For: "data",
                 Text: "Data do agendamento",
@@ -105,109 +129,212 @@ const setFormsAdd = {
         }
     };
 
-setFormsGet = {
-
+putForm = {
+    putVeterinario: {
+        id:{
+            For: "id",
+            Text: "id do veterinário",
+            Type:"number",
+            Id: "id",
+            Name: "id",
+            Placeholder: "Digite o id do veterinário",
+        },
+        nome:{
+            For: "nome",
+            Text: "Nome do veterinário",
+            Type:"text",
+            Id: "nome",
+            Name: "nome",
+            Placeholder: "Digite o nome do veterinário",
+        },
+        especialidade:{
+            For: "especialidade",
+            Text: "Especialidade",
+            Type:"text",
+            Id: "especialidade",
+            Name: "especialidade",
+            Placeholder: "Digite a especialidade do veterinário",
+        },
+    },
+    putMedicamento:{
+        tipo:{
+            For: "tipo",
+            Text: "Tipo de animal",
+            Type:"text",
+            Id: "tipo",
+            Name: "tipo",
+            Placeholder: "Digite o tipo de animal",
+        },
+        nome:{
+            For: "nome",
+            Text: "Nome do medicamento",
+            Type:"text",
+            Id: "nome",
+            Name: "nome",
+            Placeholder: "Digite o nome do medicamento",
+        
+        },
+        novoNome:{
+            For: "novoNome",
+            Text: "Novo nome do medicamento",
+            Type:"text",
+            Id: "novoNome",
+            Name: "novoNome",
+            Placeholder: "Digite o novo nome do medicamento",
+        },
+        agendamento:{
+            id:{
+                For: "id",
+                Text: "id do agendamento",
+                Type:"number",
+                Id: "id",
+                Name: "id",
+                Placeholder: "Digite o id do agendamento",
+            },
+            data:{
+                For: "data",
+                Text: "Data do agendamento",
+                Type:"date",
+                Id: "data",
+                Name: "data",
+            },
+            animal:{
+                For: "animal",
+                Text: "id do animal",
+                Type:"number",
+                Id: "animal",
+                Name: "animal",
+                Placeholder: "Digite o id do animal",
+            },
+            veterinario:{
+                For: "veterinario",
+                Text: "id do veterinário",
+                Type:"number",
+                Id: "veterinario",
+                Name: "veterinario",
+                Placeholder: "Digite o id do veterinário",
+            }
+        }
+    }
 }
+
+
 
 document.querySelectorAll('.containerButtons').forEach(div => {
     div.addEventListener('click', function(event) {
         if (event.target.tagName === 'BUTTON') {
             console.log('Botão pressionado:', event.target.id);
             // Aqui você pode executar a ação desejada
-            document.getElementById("formAdd").innerHTML = ""; // Limpa o container antes de adicionar novo formulário
-            
+            formulario = document.getElementById("form");
+            formulario.innerHTML = ""; // Limpa o container antes de adicionar novo formulário
+
             switch(event.target.id) {
-                case "addMedicamento":
+                case "add Medicamento":
                     
                     for (const key in setFormsAdd.addMedicamento) {
                         const element = setFormsAdd.addMedicamento[key];
-                        let [label, input] = createInput(
+                        createInput(
                             element.For,
                             element.Text,
                             element.Type,
                             element.Id,
                             element.Name,
-                            element.Placeholder
+                            element.Placeholder,
+                            'Medicamento'
                         );
-                        formulario.appendChild(label);
-                        formulario.appendChild(input);
                         
                     }
-                    button = document.createElement("button");
-                    button.setAttribute("id", "post Medicamento");
-                    button.setAttribute("type", "submit");
-                    button.innerText = "submit";
-                    formulario.appendChild(button);
+                    createInput(
+                        "novoNome",
+                        "Novo nome",
+                        "text",
+                        "novoNome",
+                        "novoNome",
+                        "Digite o novo nome do medicamento",
+                        'Medicamento'
+                    )
+                    createButton(formulario, "post", "Medicamento");
+                    createButton(formulario, "get", "Medicamento");
+                    createButton(formulario, "post", "aplMedicamento");
+                    createButton(formulario, "put", "Medicamento");
                     break;
-                case "addAnimal":
-                    formulario = document.getElementById("formAdd");
+                case "add Animal":
                     for (const key in setFormsAdd.addAnimal) {
                         const element = setFormsAdd.addAnimal[key];
-                        let [label, input] = createInput(
+                        createInput(
                             element.For,
                             element.Text,
                             element.Type,
                             element.Id,
                             element.Name,
-                            element.Placeholder
+                            element.Placeholder,
+                            'Animal'
                         );
-                        formulario.appendChild(label);
-                        formulario.appendChild(input);
+                        
                     }
-                    button = document.createElement("button");
-                    button.setAttribute("id", "post Animal");
-                    button.setAttribute("type", "submit");
-                    button.innerText = "submit";
-                    formulario.appendChild(button);
+                    createButton(formulario, "post", "Animal");
+                    createButton(formulario, "get", "Animal");
+                    createButton(formulario, "delete", "Animal");
+                    createButton(formulario, "put", "Animal");
                     break;
-                case "addVeterinario":
-                    formulario = document.getElementById("formAdd");
+                case "add Veterinario":
                     for (const key in setFormsAdd.addVeterinario) {
                         const element = setFormsAdd.addVeterinario[key];
-                        let [label, input] = createInput(
+                        createInput(
                             element.For,
                             element.Text,
                             element.Type,
                             element.Id,
                             element.Name,
-                            element.Placeholder
+                            element.Placeholder,
+                            'Veterinario'
                         );
-                        formulario.appendChild(label);
-                        formulario.appendChild(input);
                     }
-                    button = document.createElement("button");
-                    button.setAttribute("id", "post Veterinario");
-                    button.setAttribute("type", "submit");
-                    button.innerText = "submit";
-                    formulario.appendChild(button);
+                    createButton(formulario, "post", "Veterinario");
+                    createButton(formulario, "get", "Veterinario");
+                    createButton(formulario, "delete", "Veterinario");
+                    createButton(formulario, "put", "Veterinario");
                     break;
-                case "addAgendamento":
-                    formulario = document.getElementById("formAdd");
+                case "add Agendamento":
                     for (const key in setFormsAdd.addAgendamento) {
                         const element = setFormsAdd.addAgendamento[key];
-                        let [label, input] = createInput(
+                        createInput(
                             element.For,
                             element.Text,
                             element.Type,
                             element.Id,
                             element.Name,
-                            element.Placeholder
+                            element.Placeholder,
+                            'Agendamento'
                         );
-                        formulario.appendChild(label);
-                        formulario.appendChild(input);
                     }
-                    button = document.createElement("button");
-                    button.setAttribute("id", "post Agendamento");
-                    button.setAttribute("type", "submit");
-                    button.innerText = "submit";
-                    formulario.appendChild(button);
+                    createButton(formulario, "post", "Agendamento");
+                    createButton(formulario, "get", "Agendamento");
+                    createButton(formulario, "delete", "Agendamento");
+                    createButton(formulario, "put", "Agendamento");
                     break;
             }
             formulario.onsubmit = function(e){
                 e.preventDefault();
                 buttonId = e.submitter.id;
                 console.log("submit", buttonId);
-                postOperation(buttonId.split(" ")[1], Object.fromEntries(new FormData(formulario)));
+                operacaoo = buttonId.split(" ")[0];
+                tipo = buttonId.split(" ")[1];
+                switch(operacaoo) {
+                    case "post":
+                        postOperation(buttonId.split(" ")[1], Object.fromEntries(new FormData(formulario)));
+                        break;
+                    case "get":
+                        getOperation(buttonId.split(" ")[1], Object.fromEntries(new FormData(formulario)));
+                        break;
+                    case "delete":
+                        deleteOperation(buttonId.split(" ")[1], Object.fromEntries(new FormData(formulario)));
+                        break;
+                    case "put":
+                        putOperation(buttonId.split(" ")[1], Object.fromEntries(new FormData(formulario)));
+                        break;
+                }
+
                 
             }
 
@@ -217,7 +344,10 @@ document.querySelectorAll('.containerButtons').forEach(div => {
     });
 });
 
+
+
 postOperation = (tipo, dados) => {
+
     switch(tipo) {
         case "Medicamento":
             console.log("Postando medicamento:", dados);
@@ -292,8 +422,7 @@ postOperation = (tipo, dados) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    id: 0,
-                    data: convertDate(dados.data),
+                    data: dados.data,
                     animalId: parseInt(dados.animal),
                     veterinarioId: parseInt(dados.veterinario)
                 })
@@ -310,11 +439,24 @@ postOperation = (tipo, dados) => {
                 console.error("Erro na requisição:", error);
             })
             break;
+        case "aplMedicamento":
+            console.log("Postando aplicação de medicamento:", dados);
+            fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}/aplicar`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: dados.medicamento,
+                    quantidade: parseInt(dados.qtd),
+                })
+            })
     }
 }
 
 
-createInput = (lFor, lText, iType, iId, iName, iPlaceholder) => {
+createInput = (lFor, lText, iType, iId, iName, iPlaceholder, tipo) => {
+    form = document.getElementById("form");
     let label = document.createElement("label");
     label.setAttribute("for", lFor);
     label.innerText = lText;
@@ -323,12 +465,403 @@ createInput = (lFor, lText, iType, iId, iName, iPlaceholder) => {
     input.setAttribute("id", iId);
     input.setAttribute("name", iName);
     input.setAttribute("placeholder", iPlaceholder);
-    return [label, input];
+
+    form.appendChild(label);
+    form.appendChild(input);
+    
 }
 
-
-
-convertDate = (dataISO) => {
-    const [ano, mes, dia] = dataISO.split("-");
-    return `${ano}-${mes}-${dia}`;
+createButton = ( form, operacao, tipo) =>{
+    button = document.createElement("button");
+    button.setAttribute("id", `${operacao} ${tipo}`);
+    button.setAttribute("type", "submit");
+    
+        switch(operacao){
+            case "post":
+                if(tipo === "aplMedicamento"){
+                    button.setAttribute("value", operacao + " Medicamento");
+                    button.innerText = `Aplicar`;
+                }
+                else {
+                    button.setAttribute("value",operacao + " " + tipo);
+                    button.innerText = `submit`;
+                }
+                
+                break;
+            case "get":
+                button.setAttribute("value",operacao + " " + tipo);
+                button.innerText = `buscar`;
+                break;
+            case "delete":
+                button.setAttribute("value",operacao + " " + tipo);
+                button.innerText = `deletar`;
+                break;
+            case "put":
+                button.setAttribute("value",operacao + " " + tipo);
+                button.innerText = `alterar`;
+                break;
+            
+    }
+    form.appendChild(button);
 }
+
+getOperation =(tipo, dados) =>{
+    console.log("getOperation", tipo, dados);
+    switch(tipo){
+        case "Veterinario":
+            if(!dados.id  || dados.id === ""){
+                fetch('http://localhost:8080/veterinarios',{
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60'
+   
+                    },
+                })
+                .then(response => response.json())
+                .then(data =>{
+                    console.log("Veterinarios:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar veterinarios:", error);
+                })
+            }
+            else{
+                fetch(`http://localhost:8080/veterinarios/${dados.id}`, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Veterinario:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar veterinario:", error);
+                })
+            }
+            break;
+        case "Medicamento":
+            if ((!dados.animal || dados.animal === "") && (!dados.nome || dados.nome === "")) {
+                fetch('http://localhost:8080/estoque/todos', {
+                    method: 'GET',
+                    
+                   
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Medicamentos:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar medicamentos:", error);
+                })
+            }
+            else if( dados.nome && dados.nome.trim() !== ""){
+                fetch(`http://localhost:8080/estoque/buscar?nome=${dados.nome}`,{
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Medicamento:", data);
+                    // Aqui você pode manipular os dados recebidos
+                    if (!response.ok) {
+                        // Se não foi, lança um erro com o status para ser pego pelo .catch()
+                        throw new Error(`Erro do servidor: ${response.status} ${response.statusText}`);
+                    }
+                     // Se a resposta foi bem-sucedida, converte para JSON
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar medicamento:", error);
+                })
+            }
+            else if(dados.animal && dados.animal.trim() !== ""){
+                fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}`,{
+                    method: 'GET',
+                    
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Medicamentos do animal:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar medicamentos do animal:", error);
+                })
+            }
+            break;
+        case "Animal":
+            if(!dados.id && dados.nome === '' && !dados.idade && dados.raca === '' && dados.tipo === ''){
+                fetch('http://localhost:8080/animais', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60',
+                        'transfer-encoding': 'chunked',
+                    },
+                })
+                .then(response => response.json())
+                .then(data =>{
+                    console.log("Animais:", data);
+                    // Aqui você pode manipular os dados recebidos
+
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar animais:", error);
+                })
+            }
+            else if(dados.id){
+                fetch('http://localhost:8080/animais/' + dados.id, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60',
+                        'transfer-encoding': 'chunked',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Animal:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar animal:", error);
+                })
+            }
+            else if(dados.nome){
+                fetch(`http://localhost:8080/animais/search/${dados.nome}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60',
+                        'transfer-encoding': 'chunked',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Animal:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar animal:", error);
+                })
+            }
+            else if(dados.tipo){
+                fetch(`http://localhost:8080/animais/tipo/${dados.tipo.toUpperCase()}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60',
+                        'transfer-encoding': 'chunked',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Animais filtrados:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar animais filtrados:", error);
+                })
+            }
+            break;
+        case "Agendamento":
+            if(!dados.id){
+                fetch('http://localhost:8080/agendamentos', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60',
+                        'transfer-encoding': 'chunked',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Agendamentos:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar agendamentos:", error);
+                })
+            
+            }
+            else{
+                fetch(`http://localhost:8080/agendamentos/${dados.id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Connection': 'keep-alive',
+                        'keep-alive': 'timeout=60',
+                        'transfer-encoding': 'chunked',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Agendamento:", data);
+                    // Aqui você pode manipular os dados recebidos
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar agendamento:", error);
+                })
+            }
+
+    }
+}
+
+deleteOperation = (tipo, dados) => {
+    switch(tipo){
+        case 'Veterinario':
+            fetch(`http://localhost:8080/veterinarios/`+ dados.id, {
+                method: 'DELETE',
+                
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Veterinario deletado com sucesso!");
+                } else {
+                    console.error("Erro ao deletar veterinario:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao deletar veterinario:", error);
+            })
+            break;
+        case 'Animal':
+            fetch('http//localhost:8080/animais/' + dados.id, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Veterinario deletado com sucesso!");
+                } else {
+                    console.error("Erro ao deletar veterinario:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao deletar veterinario:", error);
+            })
+            break;
+        case 'Agendamento':
+            fetch(`http://localhost:8080/agendamentos/${dados.id}`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Agendamento deletado com sucesso!");
+                } else {
+                    console.error("Erro ao deletar agendamento:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao deletar agendamento:", error);
+            })
+            break;
+    }
+}
+
+putOperation = (tipo, dados) => {
+    switch(tipo){
+        case "Veterinario":
+            fetch(`http://localhost:8080/veterinarios/${dados.id}`, {
+                method: 'PUT',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: dados.nome,
+                    especialidade: dados.especialidade
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Veterinario atualizado com sucesso!");
+                } else {
+                    console.error("Erro ao atualizar veterinario:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar veterinario:", error);
+            })
+            break;
+        case "Medicamento":
+            fetch('http://localhost:8080/estoque/' + dados.tipo.toUpperCase() + '/editar-nome', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: dados.nome,
+                    novoNome: dados.novoNome
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Medicamento atualizado com sucesso!");
+                } else {
+                    console.error("Erro ao atualizar medicamento:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar medicamento:", error);
+            })
+            break;
+        case "Animal":
+            fetch(`http://localhost:8080/animais/${dados.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    tipo: dados.tipo.toUpperCase(),
+                    novo:{
+                        nome: dados.nome,
+                        idade: parseInt(dados.idade),
+                        raca: dados.raca,
+                    }
+                    
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Animal atualizado com sucesso!");
+                } else {
+                    console.error("Erro ao atualizar animal:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar animal:", error);
+            })
+            break;
+        case "Agendamento":
+            fetch('http://localhost:8080/agendamentos/' + dados.id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: dados.data,
+                    animalId: parseInt(dados.animal),
+                    veterinarioId: parseInt(dados.veterinario)
+                })
+            })
+            .then(response =>{
+                if (response.ok) {
+                    console.log("Agendamento atualizado com sucesso!");
+                } else {
+                    console.error("Erro ao atualizar agendamento:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar agendamento:", error);
+            })
+            break;
+    }   
+}
+
