@@ -558,9 +558,12 @@ getOperation =(tipo, dados) =>{
                     console.error("Erro ao buscar medicamentos:", error);
                 })
             }
-            else if( dados.nome && dados.nome.trim() !== ""){
-                fetch(`http://localhost:8080/estoque/buscar?nome=${dados.nome}`,{
+            else if( (dados.nome && dados.nome.trim() !== "") && (!dados.animal && dados.animal.trim() === "")){
+                fetch(`http://localhost:8080/estoque/buscar?nome=` + dados.nome,{
                     method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -577,7 +580,7 @@ getOperation =(tipo, dados) =>{
                     console.error("Erro ao buscar medicamento:", error);
                 })
             }
-            else if(dados.animal && dados.animal.trim() !== ""){
+            else if((dados.animal && dados.animal.trim() !== "") && (!dados.nome || dados.nome.trim() === "")){
                 fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}`,{
                     method: 'GET',
                     
