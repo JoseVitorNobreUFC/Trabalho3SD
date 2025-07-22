@@ -46,8 +46,12 @@ public class VeterinarioService {
     }
 
     public Veterinario buscar(int id) {
-        return repository.findById(id)
-            .orElseThrow(() -> new NotFoundException("Veterinário " + id + " não encontrado."));
+        List<Veterinario> veterinarios = listar();
+
+        return veterinarios.stream()
+                .filter(vet -> vet.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Veterinário de id " + id + " nao encontrado"));
     }
 
     public Veterinario editar(int id, Veterinario novo) {

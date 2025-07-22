@@ -1,3 +1,10 @@
 {
-  "animais" : { }
+  "animais" : {
+    "GATO" : [ {
+      "id" : 1,
+      "nome" : "string",
+      "idade" : 0,
+      "raca" : "string"
+    } ]
+  }
 }
