@@ -48,8 +48,8 @@ public class AnimalController {
         return animalService.buscar(id);
     }
 
-    @PutMapping("/{id}")
-    public void editarAnimal(@PathVariable int id, @RequestBody EnumAnimal tipo, @RequestBody Animal novo) {
+    @PutMapping("/{tipo}/{id}")
+    public void editarAnimal(@PathVariable EnumAnimal tipo, @PathVariable int id, @RequestBody Animal novo) {
         animalService.editarAnimal(tipo, id, novo);
     }
     
