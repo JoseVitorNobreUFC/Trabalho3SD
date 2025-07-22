@@ -34,7 +34,7 @@ public class AreaDeRepouso {
 
   public void editarAnimal(EnumAnimal tipo, int idAnimal, Animal animal) {
     animais.get(tipo).removeIf(animal1 -> animal1.getId() == idAnimal);
-    animais.get(tipo).add(animal);
+    animais.get(tipo).add(new Animal(idAnimal, animal.getNome(), animal.getIdade(), animal.getRaca()));
   }
 
   public List<Animal> getAnimais(EnumAnimal tipo) {
