@@ -423,8 +423,8 @@ postOperation = (tipo, dados) => {
                 },
                 body: JSON.stringify({
                     data: dados.data,
-                    animalId: parseInt(dados.animal),
-                    veterinarioId: parseInt(dados.veterinario)
+                    animal: parseInt(dados.animal),
+                    veterinario: parseInt(dados.veterinario)
                 })
                 
             })
@@ -737,14 +737,14 @@ deleteOperation = (tipo, dados) => {
             })
             break;
         case 'Animal':
-            fetch('http//localhost:8080/animais/' + dados.id, {
+            fetch('http://localhost:8080/animais/' + dados.id, {
                 method: 'DELETE',
             })
             .then(response => {
                 if (response.ok) {
-                    console.log("Veterinario deletado com sucesso!");
+                    console.log("Animal deletado com sucesso!");
                 } else {
-                    console.error("Erro ao deletar veterinario:", response.statusText);
+                    console.error("Erro ao deletar Animal:", response.statusText);
                 }
             })
             .catch(error => {
@@ -794,15 +794,8 @@ putOperation = (tipo, dados) => {
             })
             break;
         case "Medicamento":
-            fetch('http://localhost:8080/estoque/' + dados.tipo.toUpperCase() + '/editar-nome', {
+            fetch('http://localhost:8080/estoque/' + dados.animal.toUpperCase() + '/editar-nome?antigo=' + dados.nome + '&novo=' + dados.novoNome, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nome: dados.nome,
-                    novoNome: dados.novoNome
-                })
             })
             .then(response => {
                 if (response.ok) {
@@ -850,8 +843,8 @@ putOperation = (tipo, dados) => {
                 },
                 body: JSON.stringify({
                     data: dados.data,
-                    animalId: parseInt(dados.animal),
-                    veterinarioId: parseInt(dados.veterinario)
+                    animal: parseInt(dados.animal),
+                    veterinario: parseInt(dados.veterinario)
                 })
             })
             .then(response =>{

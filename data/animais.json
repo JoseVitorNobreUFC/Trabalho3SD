@@ -1,11 +1,6 @@
 {
   "animais" : {
     "GATO" : [ {
-      "id" : 1,
-      "nome" : "milu",
-      "idade" : 4,
-      "raca" : "golden"
-    }, {
       "id" : 4,
       "nome" : "lion",
       "idade" : 5,
@@ -16,12 +11,22 @@
       "nome" : "blue",
       "idade" : 4,
       "raca" : "arara azul"
+    }, {
+      "id" : 5,
+      "nome" : "jose",
+      "idade" : 6,
+      "raca" : "loro"
     } ],
     "CACHORRO" : [ {
       "id" : 3,
       "nome" : "bilu",
       "idade" : 4,
       "raca" : "pincher"
+    }, {
+      "id" : 6,
+      "nome" : "pitoco",
+      "idade" : 6,
+      "raca" : "corg"
     } ]
   }
 }

@@ -2,7 +2,7 @@
   "todos" : {
     "PAPAGAIO" : {
       "itens" : {
-        "paracetamol" : 1,
+        "paracetamol" : 5,
         "aplazolan" : 5,
         "dipirona" : 2,
         "morfina" : 20
@@ -19,7 +19,7 @@
       "itens" : {
         "benzetacil" : 8,
         "dipirona" : 9,
-        "erva" : 15
+        "paracetamol" : 15
       }
     }
   }
