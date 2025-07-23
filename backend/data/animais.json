@@ -2,6 +2,7 @@
   "animais" : {
     "GATO" : [ {
       "id" : 1,
+<<<<<<< HEAD
       "nome" : "baltazar",
       "idade" : 5,
       "raca" : "ciames"
@@ -17,6 +18,11 @@
       "nome" : "bilu",
       "idade" : 3,
       "raca" : "golden"
+=======
+      "nome" : "string",
+      "idade" : 0,
+      "raca" : "string"
+>>>>>>> 811e6f9b9226c9573c3d36553fdb43a2ecf7db80
     } ]
   }
 }
