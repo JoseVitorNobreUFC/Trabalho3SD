@@ -441,15 +441,9 @@ postOperation = (tipo, dados) => {
             break;
         case "aplMedicamento":
             console.log("Postando aplicação de medicamento:", dados);
-            fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}/aplicar`, {
+            fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}/aplicar?nome=${dados.medicamento}&quantidade=${parseInt(dados.qtd)}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nome: dados.medicamento,
-                    quantidade: parseInt(dados.qtd),
-                })
+                
             })
     }
 }
@@ -794,8 +788,8 @@ putOperation = (tipo, dados) => {
             })
             break;
         case "Medicamento":
-            fetch('http://localhost:8080/estoque/' + dados.animal.toUpperCase() + '/editar-nome?antigo=' + dados.nome + '&novo=' + dados.novoNome, {
-                method: 'PUT',
+            fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}/editar-nome?antigo=${dados.nome}&novo=${dados.novoNome}`, {
+                method: 'PUT',  
             })
             .then(response => {
                 if (response.ok) {
@@ -809,20 +803,17 @@ putOperation = (tipo, dados) => {
             })
             break;
         case "Animal":
-            fetch(`http://localhost:8080/animais/${dados.id}`, {
+            fetch(`http://localhost:8080/animais/${dados.tipo.toUpperCase()}/${dados.id}`, {
                 method: 'PUT',
-                headers: {
+                headers:{
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    tipo: dados.tipo.toUpperCase(),
-                    novo:{
-                        nome: dados.nome,
-                        idade: parseInt(dados.idade),
-                        raca: dados.raca,
-                    }
-                    
+                    nome: dados.nome,
+                    idade: dados.idade,
+                    raca: dados.raca
                 })
+                
             })
             .then(response => {
                 if (response.ok) {

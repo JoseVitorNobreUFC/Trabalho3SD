@@ -1,3 +1,22 @@
 {
-  "todos" : { }
+  "todos" : {
+    "GATO" : {
+      "itens" : {
+        "paracetamol" : 90
+      }
+    },
+    "CACHORRO" : {
+      "itens" : {
+        "morfina" : 69,
+        "benzetacil" : 80
+      }
+    },
+    "PAPAGAIO" : {
+      "itens" : {
+        "dipirona" : 56,
+        "paracetamol" : 50,
+        "benzetacil" : 56
+      }
+    }
+  }
 }
