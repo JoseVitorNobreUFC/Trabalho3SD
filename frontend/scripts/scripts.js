@@ -506,12 +506,7 @@ getOperation =(tipo, dados) =>{
             if(!dados.id  || dados.id === ""){
                 fetch('http://localhost:8080/veterinarios',{
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Connection': 'keep-alive',
-                        'keep-alive': 'timeout=60'
-   
-                    },
+                    
                 })
                 .then(response => response.json())
                 .then(data =>{
@@ -537,7 +532,7 @@ getOperation =(tipo, dados) =>{
             }
             break;
         case "Medicamento":
-            if ((!dados.animal || dados.animal === "") && (!dados.nome || dados.nome === "")) {
+            if ((!dados.animal || dados.animal === "") && (!dados.medicamento || dados.medicamento === "")) {
                 fetch('http://localhost:8080/estoque/todos', {
                     method: 'GET',
                     
@@ -552,23 +547,14 @@ getOperation =(tipo, dados) =>{
                     console.error("Erro ao buscar medicamentos:", error);
                 })
             }
-            else if( (dados.nome && dados.nome.trim() !== "") && (!dados.animal && dados.animal.trim() === "")){
-                fetch(`http://localhost:8080/estoque/buscar?nome=` + dados.nome,{
+            else if( (dados.medicamento && dados.medicamento.trim() !== "") && (!dados.animal && dados.animal.trim() === "")){
+                fetch(`http://localhost:8080/estoque/buscar?nome=` + dados.medicamento,{
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    
                 })
                 .then(response => response.json())
                 .then(data => {
                     console.log("Medicamento:", data);
-                    // Aqui você pode manipular os dados recebidos
-                    if (!response.ok) {
-                        // Se não foi, lança um erro com o status para ser pego pelo .catch()
-                        throw new Error(`Erro do servidor: ${response.status} ${response.statusText}`);
-                    }
-                     // Se a resposta foi bem-sucedida, converte para JSON
-                    return response.json();
                 })
                 .catch(error => {
                     console.error("Erro ao buscar medicamento:", error);
@@ -788,7 +774,7 @@ putOperation = (tipo, dados) => {
             })
             break;
         case "Medicamento":
-            fetch(`http://localhost:8080/estoque/${dados.animal.toUpperCase()}/editar-nome?antigo=${dados.nome}&novo=${dados.novoNome}`, {
+            fetch('http://localhost:8080/estoque/' + dados.animal.toUpperCase() + '/editar-nome?antigo=' + dados.medicamento + '&novo=' + dados.novoNome, {
                 method: 'PUT',  
             })
             .then(response => {
