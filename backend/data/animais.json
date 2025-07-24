@@ -12,6 +12,11 @@
       "idade" : 3,
       "raca" : "corvo"
     } ],
-    "CACHORRO" : [ ]
+    "CACHORRO" : [ {
+      "id" : 4,
+      "nome" : "thor",
+      "idade" : 5,
+      "raca" : "pitbull"
+    } ]
   }
 }

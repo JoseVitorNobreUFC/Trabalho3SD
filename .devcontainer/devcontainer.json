@@ -1,0 +1,10 @@
+{
+  "name": "Java Custom",
+  "image": "mcr.microsoft.com/devcontainers/java:17",
+  "postCreateCommand": "apt update && apt install -y maven",
+  "customizations": {
+    "vscode": {
+      "extensions": ["vscjava.vscode-java-pack"]
+    }
+  }
+}

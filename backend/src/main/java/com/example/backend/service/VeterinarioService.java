@@ -37,6 +37,7 @@ public class VeterinarioService {
     }
 
     public void remover(int id) {
+        System.out.println(agendamentoService.contemVeterinario(id));
         if (agendamentoService.contemVeterinario(id)) {
             throw new BadRequestException("Veterinário possui agendamento");
         }

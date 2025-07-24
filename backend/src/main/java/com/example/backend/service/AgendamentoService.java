@@ -26,18 +26,32 @@ public class AgendamentoService {
     }
 
     public boolean contemAnimal(int id) {
-        List<Agendamento> agendamentos = repository.findAll();
-        return agendamentos.stream().anyMatch(ag -> ag.getAnimal() == id);
+        List<Agendamento> agendamentos = listar();
+        for (int i = 0; i < agendamentos.size(); i++) {
+            if (agendamentos.get(i).getAnimal() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean contemVeterinario(int id) {
-        List<Agendamento> agendamentos = repository.findAll();
-        return agendamentos.stream().anyMatch(ag -> ag.getVeterinario() == id);
+        List<Agendamento> agendamentos = listar();
+        System.out.println(agendamentos);
+        for (int i = 0; i < agendamentos.size(); i++) {
+            if (agendamentos.get(i).getVeterinario() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Agendamento buscar(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Agendamento de id " + id + " não encontrado."));
+        List<Agendamento> agendamentos = listar();
+        if (agendamentos.get(id) == null) {
+            throw new NotFoundException("Agendamento " + id + " nao encontrado.");
+        }
+        return agendamentos.get(id);
     }
 
     public Agendamento agendar(Agendamento agendamento) {

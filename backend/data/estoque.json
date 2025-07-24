@@ -1,16 +1,18 @@
 {
   "todos" : {
-    "GATO" : {
-      "itens" : {
-        "paracetamol" : 90,
-        "cetralina" : 899
-      }
-    },
     "PAPAGAIO" : {
       "itens" : {
         "dipirona" : 56,
         "paracetamol" : 50,
         "benzetacil" : 56
+      }
+    },
+    "GATO" : {
+      "itens" : {
+        "paracetamol" : 90,
+        "cetralina" : 100,
+        "dipirona" : 80,
+        "ritalina" : 90
       }
     },
     "CACHORRO" : {

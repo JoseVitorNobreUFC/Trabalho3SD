@@ -2,8 +2,11 @@ package com.example.backend.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
@@ -12,9 +15,11 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
             .info(new Info()
-                .title("API Clínica Veterinária")
-                .version("1.0.0")
-                .description("API para gerenciamento de animais, agendamentos, veterinários e estoque de medicamentos.")
-            );
+                .title("Minha API")
+                .version("1.0")
+                .description("Documentação da API"))
+            .servers(List.of(
+                new Server().url("https://solid-spoon-75qp9xxvxq4fpp74-8080.app.github.dev")
+            ));
     }
 }
