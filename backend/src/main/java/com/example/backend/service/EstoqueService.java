@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exceptions.BadRequestException;
 import com.example.backend.model.enums.EnumAnimal;
 import com.example.backend.model.gerenciadores.Estoque;
 import com.example.backend.model.gerenciadores.Medicamentos;
@@ -43,7 +44,11 @@ public class EstoqueService {
     public void editarNomeMedicamento(EnumAnimal animal, String antigoNome, String novoNome) {
         Medicamentos meds = new Medicamentos(estoque.getMedicamentos(animal));
         if (meds != null && meds.getItens().containsKey(antigoNome)) {
+            if (meds.getItens().containsKey(novoNome)) {
+                throw new BadRequestException("Já existe um medicamento com esse nome");
+            }
             int quantidade = meds.getItens().remove(antigoNome);
+
             meds.getItens().put(novoNome, quantidade);
             salvar();
         }

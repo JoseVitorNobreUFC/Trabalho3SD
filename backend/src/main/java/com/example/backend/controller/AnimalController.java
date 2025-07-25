@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.animais.Animal;
 import com.example.backend.model.enums.EnumAnimal;
 import com.example.backend.service.AnimalService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController

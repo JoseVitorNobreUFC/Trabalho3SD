@@ -48,10 +48,12 @@ public class AgendamentoService {
 
     public Agendamento buscar(int id) {
         List<Agendamento> agendamentos = listar();
-        if (agendamentos.get(id) == null) {
-            throw new NotFoundException("Agendamento " + id + " nao encontrado.");
+        for (int i = 0; i < agendamentos.size(); i++) {
+            if (agendamentos.get(i).getId() == id) {
+                return agendamentos.get(i);
+            }
         }
-        return agendamentos.get(id);
+        throw new NotFoundException("Agendamento de id " + id + " nao encontrado");
     }
 
     public Agendamento agendar(Agendamento agendamento) {
